@@ -18,13 +18,21 @@ export class CustomMap {
     });
   }
 
-  addMarker(mappable: User | Company): void {
-    new google.maps.Marker({
+  addMarker(mappable: Mappable): void {
+    const marker = new google.maps.Marker({
       map: this.googleMap,
       position: {
         lat: mappable.location.lat,
         lng: mappable.location.lng,
       },
+    });
+
+    marker.addListener("click", () => {
+      const infoWindow = new google.maps.InfoWindow({
+        content: "Hi there!",
+      });
+
+      infoWindow.open(this.googleMap, marker);
     });
   }
 }
